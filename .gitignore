@@ -12,11 +12,10 @@ build/
 *.js.map
 !jest.config.js
 
-# Test files
-tests/
-test-*.ts
-*.test.ts
-*.spec.ts
+# Test files (keep source test files)
+test-*.js
+*.test.js
+*.spec.js
 
 # IDE
 .vscode/
@@ -44,7 +43,23 @@ tmp/
 data/
 memory/
 logs/
+telemetry/
 *.log
+
+# Test and demo files
+test-*.ts
+demo-*.ts
+test-*.js
+demo-*.js
+
+# Development documentation
+docs/development/
+QUICK_START_SEMANTIC.md
+PRODUCTION_READY_ANALYSIS.md
+
+# Cache and temporary data
+multimodal-cache/
+vector-store/
 
 # OS files
 Thumbs.db

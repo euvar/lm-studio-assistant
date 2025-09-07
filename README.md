@@ -1,19 +1,16 @@
 # LM Studio Assistant
 
-Your local AI assistant for programming - like Claude Code, but running entirely on your computer!
+Advanced AI assistant with pure semantic understanding, built for production use with LM Studio.
 
-## Features
+## 🚀 Key Features
 
-- 🤖 **100% Local AI** - Works with LM Studio models running on your machine
-- 🛠️ **Smart Agent System** - Multiple specialized agents for different tasks
-- 📁 **File Management** - Create, edit, read, and delete files
-- 🔍 **Web Search** - Search the internet for solutions
-- 🐛 **Error Analysis** - Automatically fix code errors
-- 🖼️ **Image Processing** - OCR, analysis, and format conversion
-- 📊 **Vector Database** - Semantic search with ChromaDB or in-memory fallback
-- 🔧 **Performance Optimization** - Built-in monitoring and optimization
-- 🎯 **Git Integration** - Smart hooks and commit management
-- 🧪 **Advanced Debugging** - AI-powered debugging with profiling
+- **100% Semantic Understanding** - No regex or hardcoded patterns, pure LLM-based intent recognition
+- **Multi-Agent Architecture** - Supervisor pattern with specialized agents for different tasks
+- **Production Ready** - Enterprise-grade error handling, caching, monitoring, and security
+- **Multi-Modal Support** - Process text, images, audio, video, and documents
+- **Advanced Reasoning** - ReAct pattern implementation for complex problem solving
+- **Vector Memory** - Semantic search and context-aware retrieval
+- **Local Execution** - Runs entirely on your machine with LM Studio
 
 ## Prerequisites
 
@@ -45,37 +42,50 @@ npm run build
 3. Select a model from the list
 4. Start chatting!
 
-### Example Commands
+### Example Usage
 
-- "Create an Express server"
-- "Fix the syntax error in my code"
-- "Search for the latest React documentation"
-- "Analyze this image and extract text"
-- "Generate a flowchart for this algorithm"
+Simply type your requests naturally:
+- "Help me understand this error message"
+- "Search for information about React hooks"
+- "Create a Python script for data analysis"
+- "Analyze the performance of my application"
+- "Fix the bug in my code"
 
 ## Configuration
 
-The assistant will automatically create a `.lm-assistant` directory for storing:
-- Memory and context
-- Vector database
-- Temporary files
+Create a `.env` file from the example:
+```bash
+cp .env.example .env
+```
 
-## Development
+Key settings:
+- `LM_STUDIO_URL` - LM Studio API endpoint (default: http://localhost:1234/v1)
+- `ENABLE_CACHE` - Enable response caching for performance
+- `MAX_CONCURRENT_REQUESTS` - Limit concurrent LLM requests
+- `ENABLE_SECURITY_VALIDATION` - Enable security features
+
+See `.env.example` for all configuration options.
+
+## Docker Support
 
 ```bash
-# Run in development mode with hot reload
-npm run dev
+# Quick start with Docker Compose
+docker-compose up -d
 
-# Run tests
-npm test
+# Or build manually
+docker build -t lm-studio-assistant .
+docker run -p 3000:3000 lm-studio-assistant
 ```
 
 ## Architecture
 
-The assistant uses a modular architecture with:
-- **Agents**: Specialized handlers for different types of requests
-- **Tools**: Reusable functions for specific tasks
-- **Core Systems**: Performance optimization, error recovery, context management
+Production-ready architecture featuring:
+- **Semantic Intent Engine** - Pure LLM-based understanding
+- **Multi-Agent System** - Coordinated specialized agents
+- **LLM Router** - Multi-model support with fallback
+- **Vector Store** - Semantic memory and search
+- **Performance Optimizer** - Caching, batching, and request optimization
+- **Security Layer** - OWASP Top 10 for LLMs compliance
 
 ## License
 

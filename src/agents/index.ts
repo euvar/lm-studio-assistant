@@ -7,4 +7,5 @@ export { SearchAgent } from './search-agent.js';
 export { CodeAgent } from './code-agent.js';
 export { SmartProjectAgent } from './smart-project-agent.js';
 export { OrchestratorAgent } from './orchestrator-agent.js';
+export { UniversalOrchestrator } from './universal-orchestrator.js';
 export { ConversationMemory } from './conversation-memory.js';
