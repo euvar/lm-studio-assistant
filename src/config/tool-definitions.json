@@ -1,0 +1,83 @@
+{
+  "tools": [
+    {
+      "name": "web_search",
+      "purpose": "Retrieve information from the internet that requires current or up-to-date knowledge",
+      "capabilities": [
+        "Access to current events and news",
+        "Real-time data retrieval",
+        "Information beyond training cutoff"
+      ],
+      "examples": [
+        {
+          "scenario": "User wants to know current weather",
+          "reasoning": "Weather is real-time information"
+        },
+        {
+          "scenario": "User asks about recent events",
+          "reasoning": "Events after training data require web search"
+        }
+      ]
+    },
+    {
+      "name": "file_system",
+      "purpose": "Interact with files and directories on the local system",
+      "capabilities": [
+        "Read file contents",
+        "Create and modify files",
+        "Navigate directory structure",
+        "Delete files and folders"
+      ],
+      "examples": [
+        {
+          "scenario": "User wants to see what files exist",
+          "reasoning": "Requires listing directory contents"
+        },
+        {
+          "scenario": "User needs to create a configuration file",
+          "reasoning": "Requires file creation capability"
+        }
+      ]
+    },
+    {
+      "name": "code_execution",
+      "purpose": "Run code, scripts, and commands",
+      "capabilities": [
+        "Execute programming language code",
+        "Run shell commands",
+        "Test and debug code",
+        "Analyze program output"
+      ],
+      "examples": [
+        {
+          "scenario": "User wants to test a script",
+          "reasoning": "Requires code execution environment"
+        },
+        {
+          "scenario": "User needs to run a build command",
+          "reasoning": "Requires command execution capability"
+        }
+      ]
+    },
+    {
+      "name": "project_analysis",
+      "purpose": "Understand and analyze software projects",
+      "capabilities": [
+        "Examine project structure",
+        "Identify dependencies",
+        "Understand codebase purpose",
+        "Provide insights about architecture"
+      ],
+      "examples": [
+        {
+          "scenario": "User asks what a project does",
+          "reasoning": "Requires analyzing project files and structure"
+        },
+        {
+          "scenario": "User wants to understand project dependencies",
+          "reasoning": "Requires parsing package files and imports"
+        }
+      ]
+    }
+  ]
+}

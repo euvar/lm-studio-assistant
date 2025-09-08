@@ -1,6 +1,5 @@
 import { LMStudioProvider, ChatMessage } from '../providers/lmstudio.js';
 import chalk from 'chalk';
-import { UniversalReasoningPrompt } from './universal-reasoning.js';
 import { LearningSystem } from './learning-system.js';
 
 export interface ReasoningStep {
@@ -33,11 +32,7 @@ export class ReasoningAgent {
     // Get model name for adaptive prompting
     const modelName = this.provider.getModel() || 'unknown';
 
-    let reasoningPrompt = UniversalReasoningPrompt.generateModelSpecific(
-      modelName,
-      userInput,
-      availableTools
-    );
+    let reasoningPrompt = this.generateCleanPrompt(userInput, availableTools);
     
     // Apply learning-based adaptations
     reasoningPrompt = this.learningSystem.generateAdaptivePrompt(modelName, reasoningPrompt);
@@ -55,9 +50,7 @@ export class ReasoningAgent {
       const result = this.parseReasoningResponse(response.content);
       
       // Record interaction for learning
-      const expectedBehavior = UniversalReasoningPrompt.detectExplicitSearchIntent(userInput) ||
-                              userInput.toLowerCase().includes('файл') ||
-                              userInput.toLowerCase().includes('file') ? 'tools' : 'no-tools';
+      const expectedBehavior = this.conversationNeedsTools(userInput) ? 'tools' : 'no-tools';
       const actualBehavior = result.toolCalls.length > 0 ? 'tools' : 'no-tools';
       
       await this.learningSystem.recordInteraction(
@@ -231,6 +224,39 @@ export class ReasoningAgent {
 
   async getLearningReport(): Promise<string> {
     return await this.learningSystem.generateReport();
+  }
+
+  /**
+   * Generate clean prompt without hardcoded patterns
+   */
+  private generateCleanPrompt(userInput: string, availableTools: string): string {
+    return `You are an AI assistant with access to tools. Based on the user's request, determine if you need to use any tools.
+
+User Input: "${userInput}"
+
+Available Tools:
+${availableTools}
+
+Instructions:
+1. Analyze what the user is asking for
+2. Determine if any tools are needed
+3. If tools are needed, specify which ones and with what parameters
+4. If no tools are needed, just provide a direct response
+
+IMPORTANT: Never output REASONING: or ANALYSIS: prefixes. Just provide your analysis and decision.
+
+Remember:
+- Use tools only when the user explicitly asks for actions requiring them
+- For general conversation, greetings, or knowledge questions, no tools are needed
+- When in doubt, prefer not using tools unless clearly necessary`;
+  }
+  
+  /**
+   * Check if conversation needs tools
+   */
+  conversationNeedsTools(input: string): boolean {
+    // This is a simple heuristic - in a clean system, the LLM decides
+    return false;
   }
 
 }

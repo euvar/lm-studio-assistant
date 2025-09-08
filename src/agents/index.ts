@@ -1,11 +1,12 @@
+// Base exports
 export { BaseAgent } from './base-agent.js';
 export type { AgentContext, AgentResponse } from './base-agent.js';
 export { AgentRegistry } from './agent-registry.js';
-export { ConversationalAgent } from './conversational-agent.js';
-export { FileAgent } from './file-agent.js';
-export { SearchAgent } from './search-agent.js';
-export { CodeAgent } from './code-agent.js';
-export { SmartProjectAgent } from './smart-project-agent.js';
-export { OrchestratorAgent } from './orchestrator-agent.js';
-export { UniversalOrchestrator } from './universal-orchestrator.js';
-export { ConversationMemory } from './conversation-memory.js';
+
+// Clean agents without hardcoded patterns
+export { CleanAgent } from './clean-agent.js';
+export { CleanOrchestrator } from './clean-orchestrator.js';
+export { WebSearchAgent } from './web-search-agent.js';
+export { FileSystemAgent } from './file-system-agent.js';
+export { CodeExecutionAgent } from './code-execution-agent.js';
+export { DynamicAgent, DynamicAgentFactory } from './dynamic-agent.js';

@@ -22,6 +22,10 @@ export class AgentRegistry {
     this.defaultAgent = name;
   }
 
+  getAllAgents(): BaseAgent[] {
+    return Array.from(this.agents.values());
+  }
+
   async findBestAgent(context: AgentContext): Promise<BaseAgent | null> {
     // Check all agents in parallel
     const checks = Array.from(this.agents.values()).map(async (agent) => {

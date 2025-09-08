@@ -4,7 +4,7 @@ import ora from 'ora';
 import { LMStudioProvider } from '../providers/lmstudio.js';
 import { Assistant } from './assistant.js';
 import { ConfigManager, DEFAULT_CONFIG } from './config.js';
-import { EnhancedAutoCompleter } from './enhanced-autocomplete.js';
+import { AutoCompleter } from './autocomplete.js';
 import autocompletePrompt from 'inquirer-autocomplete-prompt';
 import { agentMetrics } from '../utils/agent-metrics.js';
 import { performanceMonitor } from '../utils/performance-monitor.js';
@@ -14,12 +14,12 @@ export class CLI {
   private assistant: Assistant | null = null;
   private isRunning: boolean = true;
   private config: ConfigManager;
-  private autoCompleter: EnhancedAutoCompleter;
+  private autoCompleter: AutoCompleter;
 
   constructor() {
     this.config = new ConfigManager();
     this.provider = new LMStudioProvider();
-    this.autoCompleter = new EnhancedAutoCompleter();
+    this.autoCompleter = new AutoCompleter();
     
     // Register autocomplete prompt type
     inquirer.registerPrompt('autocomplete', autocompletePrompt);
@@ -91,7 +91,7 @@ export class CLI {
           prefix: '',
           source: async (_: any, input: string) => {
             const suggestions = await this.autoCompleter.getSuggestions(input || '');
-            return suggestions.map(s => ({
+            return suggestions.map((s: any) => ({
               name: this.autoCompleter.formatSuggestion(s),
               value: s.text,
               short: s.text, // Store for selection tracking
@@ -353,11 +353,7 @@ export class CLI {
 
     const config = this.config.get();
     
-    // Update autocompleter context with current directory and recent activity
-    this.autoCompleter.updateContext({
-      currentDirectory: process.cwd(),
-      timeOfDay: this.getTimeOfDay()
-    });
+    // Update autocompleter context - removed as not supported by basic autocompleter
     
     console.log(chalk.cyan('\nAssistant:'));
     

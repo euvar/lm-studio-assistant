@@ -10,9 +10,7 @@ import { ContextManager } from './context-manager.js';
 import { ConfigManager } from './config.js';
 import { TaskPlanner, TaskPlan } from './task-planner.js';
 import { ReasoningAgent } from './reasoning-agent.js';
-import { FileNavigator } from './file-navigator.js';
-import { ErrorSolvingAssistant } from './error-solving-assistant.js';
-import { AgentRegistry, ConversationalAgent, FileAgent, SearchAgent, CodeAgent, SmartProjectAgent, OrchestratorAgent } from '../agents/index.js';
+import { AgentRegistry, CleanOrchestrator, WebSearchAgent, FileSystemAgent, CodeExecutionAgent } from '../agents/index.js';
 import { VisualLogger } from '../utils/visual-logger.js';
 import { CommandConfirmationManager } from './command-confirmation.js';
 import { performanceMonitor } from '../utils/performance-monitor.js';
@@ -35,8 +33,6 @@ export class Assistant {
   private contextManager: ContextManager;
   private taskPlanner: TaskPlanner;
   private reasoningAgent: ReasoningAgent;
-  private fileNavigator: FileNavigator;
-  private errorSolver: ErrorSolvingAssistant;
   private agentRegistry: AgentRegistry;
   private visualLogger: VisualLogger;
   private confirmationManager: CommandConfirmationManager;
@@ -56,8 +52,6 @@ export class Assistant {
     this.contextManager = new ContextManager();
     this.taskPlanner = new TaskPlanner();
     this.reasoningAgent = new ReasoningAgent(provider);
-    this.fileNavigator = new FileNavigator();
-    this.errorSolver = new ErrorSolvingAssistant(provider);
     this.agentRegistry = new AgentRegistry();
     this.visualLogger = new VisualLogger();
     this.confirmationManager = new CommandConfirmationManager();
@@ -111,17 +105,15 @@ export class Assistant {
   }
   
   private registerDefaultAgents(): void {
-    // Register orchestrator with highest priority
-    this.agentRegistry.register(new OrchestratorAgent(this.provider, this.agentRegistry), 100);
+    // Register clean orchestrator with highest priority
+    this.agentRegistry.register(new CleanOrchestrator(this.provider, this.agentRegistry), 100);
     
-    // Register other agents with appropriate priorities
-    this.agentRegistry.register(new SmartProjectAgent(this.provider), 50);
-    this.agentRegistry.register(new CodeAgent(), 40);
-    this.agentRegistry.register(new SearchAgent(), 30);
-    this.agentRegistry.register(new FileAgent(), 20);
-    this.agentRegistry.register(new ConversationalAgent(this.provider), 10);
+    // Register clean agents without patterns
+    this.agentRegistry.register(new CodeExecutionAgent(), 40);
+    this.agentRegistry.register(new WebSearchAgent(), 30);
+    this.agentRegistry.register(new FileSystemAgent(), 20);
     
-    this.agentRegistry.setDefaultAgent('conversational');
+    // Use orchestrator as default
   }
 
   async chat(input: string): Promise<string> {
